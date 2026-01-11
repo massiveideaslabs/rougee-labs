@@ -46,6 +46,14 @@
         overflow-x: hidden;
         cursor: none; /* Custom cursor handling */
       }
+      
+      /* Show default cursor on touch devices */
+      @media (hover: none) and (pointer: coarse) {
+        body {
+          cursor: auto;
+        }
+      }
+      
       /* Hide scrollbar for Chrome, Safari and Opera */
       ::-webkit-scrollbar {
         width: 8px;
@@ -59,6 +67,25 @@
       }
       ::-webkit-scrollbar-thumb:hover {
         background: #475569; 
+      }
+      
+      /* Mobile-specific improvements */
+      @media (max-width: 640px) {
+        * {
+          -webkit-tap-highlight-color: transparent;
+        }
+        
+        input, textarea, button {
+          font-size: 16px !important; /* Prevents zoom on iOS */
+        }
+      }
+      
+      /* Improve touch targets on mobile */
+      @media (hover: none) and (pointer: coarse) {
+        a, button {
+          min-height: 44px;
+          min-width: 44px;
+        }
       }
     </style>
   <script type="importmap">

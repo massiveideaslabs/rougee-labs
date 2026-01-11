@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useState, useEffect } from 'react';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { ArrowDown, Mail, MapPin, Phone, Send, ExternalLink, TrendingUp, ShoppingCart, PieChart, Users, Wallet, Lock, Zap, Globe, Landmark, LineChart } from 'lucide-react';
 import Navigation from './components/Navigation';
@@ -9,6 +9,9 @@ import MatrixRain from './components/MatrixRain';
 import { PROJECTS } from './constants';
 
 function App() {
+  // Detect touch device
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  
   // Mouse position state for parallax effects
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -20,15 +23,21 @@ function App() {
     message: ''
   });
 
-  // Parallax transform values
-  const heroTitleX = useTransform(mouseX, [-0.5, 0.5], [15, -15]);
-  const heroTitleY = useTransform(mouseY, [-0.5, 0.5], [15, -15]);
-  const heroSubtitleX = useTransform(mouseX, [-0.5, 0.5], [25, -25]);
-  const heroSubtitleY = useTransform(mouseY, [-0.5, 0.5], [25, -25]);
-  const heroDescX = useTransform(mouseX, [-0.5, 0.5], [10, -10]);
-  const heroDescY = useTransform(mouseY, [-0.5, 0.5], [10, -10]);
+  useEffect(() => {
+    // Detect touch device
+    setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+  }, []);
+
+  // Parallax transform values (disabled on mobile)
+  const heroTitleX = useTransform(mouseX, [-0.5, 0.5], isTouchDevice ? [0, 0] : [15, -15]);
+  const heroTitleY = useTransform(mouseY, [-0.5, 0.5], isTouchDevice ? [0, 0] : [15, -15]);
+  const heroSubtitleX = useTransform(mouseX, [-0.5, 0.5], isTouchDevice ? [0, 0] : [25, -25]);
+  const heroSubtitleY = useTransform(mouseY, [-0.5, 0.5], isTouchDevice ? [0, 0] : [25, -25]);
+  const heroDescX = useTransform(mouseX, [-0.5, 0.5], isTouchDevice ? [0, 0] : [10, -10]);
+  const heroDescY = useTransform(mouseY, [-0.5, 0.5], isTouchDevice ? [0, 0] : [10, -10]);
 
   const handleHeroMouseMove = (e: React.MouseEvent) => {
+    if (isTouchDevice) return;
     const { width, height } = e.currentTarget.getBoundingClientRect();
     const x = e.clientX / width - 0.5;
     const y = e.clientY / height - 0.5;
@@ -66,13 +75,13 @@ function App() {
           >
             <motion.h2 
               style={{ x: heroSubtitleX, y: heroSubtitleY }}
-              className="text-neon-cyan font-mono tracking-[0.5em] text-sm md:text-base mb-4"
+              className="text-neon-cyan font-mono tracking-[0.3em] md:tracking-[0.5em] text-xs sm:text-sm md:text-base mb-3 md:mb-4 px-2"
             >
               MAINNET STATUS: ACTIVE
             </motion.h2>
             <motion.h1 
               style={{ x: heroTitleX, y: heroTitleY }}
-              className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter mb-6"
+              className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tighter mb-4 md:mb-6 leading-tight px-2"
             >
               ROUGEE<br/>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-purple to-neon-cyan">
@@ -81,7 +90,7 @@ function App() {
             </motion.h1>
             <motion.p 
               style={{ x: heroDescX, y: heroDescY }}
-              className="text-gray-400 max-w-2xl mx-auto text-lg md:text-xl font-bold tracking-wide mb-12"
+              className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base md:text-lg lg:text-xl font-bold tracking-wide mb-8 md:mb-12 px-4"
             >
               Architecting the decentralized future through cryptographic truth and high-performance smart contracts, creating a web of interconnected dApps utilizing the $XRGE token.
             </motion.p>
@@ -98,9 +107,9 @@ function App() {
       </section>
 
       {/* Stats ticker band */}
-      <div className="w-full bg-neon-cyan/5 border-y border-neon-cyan/20 py-3 overflow-hidden flex relative z-20 backdrop-blur-sm">
+      <div className="w-full bg-neon-cyan/5 border-y border-neon-cyan/20 py-2 sm:py-3 overflow-hidden flex relative z-20 backdrop-blur-sm">
         <motion.div 
-            className="flex gap-16 whitespace-nowrap text-xs font-mono text-neon-cyan/80"
+            className="flex gap-8 sm:gap-12 md:gap-16 whitespace-nowrap text-[10px] sm:text-xs font-mono text-neon-cyan/80"
             animate={{ x: [0, -1000] }}
             transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
         >
@@ -111,7 +120,7 @@ function App() {
       </div>
 
       {/* Projects Section */}
-      <section id="work" className="relative py-32 px-4 container mx-auto z-10">
+      <section id="work" className="relative py-16 sm:py-24 md:py-32 px-4 container mx-auto z-10">
         <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-neon-purple/5 to-transparent pointer-events-none" />
         
         <motion.div
@@ -120,8 +129,8 @@ function App() {
           viewport={{ once: true }}
           className="mb-24 pl-4 border-l-4 border-neon-cyan"
         >
-          <h2 className="text-5xl md:text-7xl font-bold mb-4">SELECTED WORKS</h2>
-          <p className="text-gray-400 font-mono text-sm tracking-widest">ON-CHAIN PROTOCOLS_</p>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-3 md:mb-4">SELECTED WORKS</h2>
+          <p className="text-gray-400 font-mono text-xs sm:text-sm tracking-widest">ON-CHAIN PROTOCOLS_</p>
         </motion.div>
 
         <div className="flex flex-col items-center">
@@ -132,19 +141,19 @@ function App() {
       </section>
 
       {/* Philosophy / About Section */}
-      <section id="about" className="relative py-32 bg-dark-surface overflow-hidden">
+      <section id="about" className="relative py-16 sm:py-24 md:py-32 bg-dark-surface overflow-hidden">
         <MatrixRain />
         <div className="container mx-auto px-4 relative z-10">
-          <div className="grid md:grid-cols-2 gap-16 items-start">
+          <div className="grid md:grid-cols-2 gap-8 sm:gap-12 md:gap-16 items-start">
             <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                className="relative sticky top-32"
+                className="relative md:sticky top-8 md:top-32"
             >
-                <div className="absolute -inset-4 bg-neon-purple/20 blur-xl rounded-full" />
+                <div className="absolute -inset-2 sm:-inset-4 bg-neon-purple/20 blur-xl rounded-full" />
                 
-                <div className="relative w-full aspect-square rounded-full overflow-hidden shadow-2xl border border-white/10">
+                <div className="relative w-full aspect-square rounded-full overflow-hidden shadow-2xl border border-white/10 max-w-sm mx-auto md:max-w-none">
                     <img 
                       src="https://i.ibb.co.com/nMQScTXS/Rouge-Coin-Logo.png" 
                       alt="Rougee Token" 
@@ -157,14 +166,14 @@ function App() {
                 initial={{ opacity: 0, x: 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className="space-y-8"
+                className="space-y-6 sm:space-y-8"
             >
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                     <span className="text-neon-cyan">ONE</span> token<br/>
                     powering an entire <span className="text-neon-purple">ECOSYSTEM</span>
                 </h2>
                 
-                <div className="space-y-6 text-gray-300 leading-relaxed text-sm md:text-base">
+                <div className="space-y-4 md:space-y-6 text-gray-300 leading-relaxed text-sm sm:text-base">
                   <p>
                     At Rougee Labs, we're not just building dApps; we're engineering an ecosystem of interconnected economies all creating maximum value capture for the $XRGE token.
                   </p>
@@ -179,35 +188,35 @@ function App() {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <a 
                       href="https://dexscreener.com/base/0x147120faec9277ec02d957584cfcd92b56a24317" 
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-4 bg-white/5 border border-white/10 rounded hover:border-neon-cyan hover:bg-neon-cyan/5 transition-all group cursor-none block relative overflow-hidden"
+                      className="p-3 sm:p-4 bg-white/5 border border-white/10 rounded hover:border-neon-cyan hover:bg-neon-cyan/5 transition-all group cursor-none block relative overflow-hidden min-h-[100px]"
                       data-interactive="true"
                     >
                         <div className="flex justify-between items-start mb-2">
-                           <TrendingUp className="w-6 h-6 text-gray-400 group-hover:text-neon-cyan transition-colors" />
-                           <ExternalLink size={14} className="text-gray-600 group-hover:text-neon-cyan" />
+                           <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-gray-400 group-hover:text-neon-cyan transition-colors" />
+                           <ExternalLink size={12} className="sm:w-[14px] sm:h-[14px] text-gray-600 group-hover:text-neon-cyan" />
                         </div>
-                        <h3 className="text-lg md:text-xl font-bold text-white mb-1 group-hover:text-neon-cyan">View on Dexscreener</h3>
-                        <p className="text-[10px] font-mono text-gray-400 tracking-widest uppercase">Live Chart</p>
+                        <h3 className="text-base sm:text-lg md:text-xl font-bold text-white mb-1 group-hover:text-neon-cyan">View on Dexscreener</h3>
+                        <p className="text-[9px] sm:text-[10px] font-mono text-gray-400 tracking-widest uppercase">Live Chart</p>
                     </a>
 
                     <a 
                       href="https://www.coinbase.com/price/base-rougecoin-4317?utm_campaign=rt_i_m_w_m_acq_ugc_soc_0_asset&utm_source=ugc&utm_platform=iOS" 
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-4 bg-white/5 border border-white/10 rounded hover:border-neon-purple hover:bg-neon-purple/5 transition-all group cursor-none block relative overflow-hidden"
+                      className="p-3 sm:p-4 bg-white/5 border border-white/10 rounded hover:border-neon-purple hover:bg-neon-purple/5 transition-all group cursor-none block relative overflow-hidden min-h-[100px]"
                       data-interactive="true"
                     >
                         <div className="flex justify-between items-start mb-2">
-                           <ShoppingCart className="w-6 h-6 text-gray-400 group-hover:text-neon-purple transition-colors" />
-                           <ExternalLink size={14} className="text-gray-600 group-hover:text-neon-purple" />
+                           <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6 text-gray-400 group-hover:text-neon-purple transition-colors" />
+                           <ExternalLink size={12} className="sm:w-[14px] sm:h-[14px] text-gray-600 group-hover:text-neon-purple" />
                         </div>
-                        <h3 className="text-lg md:text-xl font-bold text-white mb-1 group-hover:text-neon-purple">BUY $XRGE</h3>
-                        <p className="text-[10px] font-mono text-gray-400 tracking-widest uppercase">On Coinbase</p>
+                        <h3 className="text-base sm:text-lg md:text-xl font-bold text-white mb-1 group-hover:text-neon-purple">BUY $XRGE</h3>
+                        <p className="text-[9px] sm:text-[10px] font-mono text-gray-400 tracking-widest uppercase">On Coinbase</p>
                     </a>
                 </div>
             </motion.div>
@@ -216,7 +225,7 @@ function App() {
       </section>
 
       {/* Tokenomics Section */}
-      <section className="py-32 relative border-t border-white/5 bg-black/40 backdrop-blur-sm z-10">
+      <section className="py-16 sm:py-24 md:py-32 relative border-t border-white/5 bg-black/40 backdrop-blur-sm z-10">
         <div className="container mx-auto px-4">
            <motion.div
              initial={{ opacity: 0, y: 30 }}
@@ -224,14 +233,14 @@ function App() {
              viewport={{ once: true }}
              className="text-center mb-16"
            >
-              <h2 className="text-4xl md:text-6xl font-bold mb-6"><span className="text-neon-cyan">$XRGE</span> TOKENOMICS</h2>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 px-4"><span className="text-neon-cyan">$XRGE</span> TOKENOMICS</h2>
               <div className="inline-flex items-center gap-2 border border-neon-purple/30 bg-neon-purple/5 px-6 py-3 rounded-full backdrop-blur-md">
                 <PieChart size={20} className="text-neon-purple" />
                 <span className="font-mono text-neon-purple tracking-widest text-sm md:text-base font-bold">TOTAL SUPPLY: 36,000,000,000</span>
               </div>
            </motion.div>
 
-           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto px-4">
               {[
                 { label: "Team Allocation", amount: "7,500,000,000", icon: Lock, subtext: "Locked for 24 months with vesting schedule", color: "text-neon-cyan", border: "group-hover:border-neon-cyan/50" },
                 { label: "Growth allocation", amount: "7,500,000,000", icon: Globe, subtext: "Partnerships, air drops, & marketing", color: "text-neon-purple", border: "group-hover:border-neon-purple/50" },
@@ -245,19 +254,19 @@ function App() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className={`bg-dark-surface p-8 rounded-2xl border border-white/5 ${item.border} transition-colors group cursor-none relative overflow-hidden`}
+                  className={`bg-dark-surface p-5 sm:p-6 md:p-8 rounded-2xl border border-white/5 ${item.border} transition-colors group cursor-none relative overflow-hidden`}
                   data-interactive="true"
                 >
-                   <div className={`absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity ${item.color}`}>
-                      <item.icon size={100} />
+                   <div className={`absolute top-0 right-0 p-2 sm:p-4 opacity-10 group-hover:opacity-20 transition-opacity ${item.color}`}>
+                      <item.icon size={60} className="sm:w-20 sm:h-20 md:w-[100px] md:h-[100px]" />
                    </div>
                    <div className="relative z-10">
-                      <div className={`p-3 w-fit rounded-lg bg-white/5 mb-4 ${item.color}`}>
-                        <item.icon size={24} />
+                      <div className={`p-2 sm:p-3 w-fit rounded-lg bg-white/5 mb-3 sm:mb-4 ${item.color}`}>
+                        <item.icon size={20} className="sm:w-6 sm:h-6" />
                       </div>
-                      <h3 className="text-2xl lg:text-3xl font-bold font-mono tracking-tighter mb-2">{item.amount}</h3>
-                      <p className="text-gray-400 text-xs lg:text-sm uppercase tracking-widest font-bold">{item.label}</p>
-                      <p className="text-gray-500 text-[10px] md:text-xs mt-2 leading-relaxed font-mono opacity-80">{item.subtext}</p>
+                      <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold font-mono tracking-tighter mb-1 sm:mb-2 break-words">{item.amount}</h3>
+                      <p className="text-gray-400 text-[10px] sm:text-xs lg:text-sm uppercase tracking-widest font-bold">{item.label}</p>
+                      <p className="text-gray-500 text-[9px] sm:text-[10px] md:text-xs mt-2 leading-relaxed font-mono opacity-80">{item.subtext}</p>
                    </div>
                 </motion.div>
               ))}
@@ -268,11 +277,11 @@ function App() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.5 }}
-                  className="bg-gradient-to-br from-neon-cyan/10 to-neon-purple/10 p-8 rounded-2xl border border-white/5 flex flex-col justify-center items-center text-center group cursor-none relative overflow-hidden"
+                  className="bg-gradient-to-br from-neon-cyan/10 to-neon-purple/10 p-5 sm:p-6 md:p-8 rounded-2xl border border-white/5 flex flex-col justify-center items-center text-center group cursor-none relative overflow-hidden"
               >
                   <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <h3 className="text-2xl font-bold mb-2">Sustainable Economics</h3>
-                  <p className="text-gray-400 text-xs leading-relaxed">
+                  <h3 className="text-xl sm:text-2xl font-bold mb-2">Sustainable Economics</h3>
+                  <p className="text-gray-400 text-[10px] sm:text-xs leading-relaxed">
                     Designed for long-term value capture and ecosystem sustainability. Team allocation, Marketing, and Treasury wallet locked in multi-sig vaults
                   </p>
               </motion.div>
@@ -281,7 +290,7 @@ function App() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-32 relative">
+      <section id="contact" className="py-16 sm:py-24 md:py-32 relative">
          {/* Grid Background */}
          <div className="absolute inset-0 bg-[linear-gradient(rgba(0,243,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,243,255,0.03)_1px,transparent_1px)] bg-[size:100px_100px] pointer-events-none" />
          
@@ -292,58 +301,58 @@ function App() {
                 viewport={{ once: true }}
                 className="text-center mb-16"
             >
-                <h2 className="text-5xl md:text-7xl font-bold mb-6">INITIATE CONTACT</h2>
-                <p className="text-neon-cyan font-mono">SECURE RPC ENDPOINT OPEN_</p>
+                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-4 md:mb-6 px-4">INITIATE CONTACT</h2>
+                <p className="text-neon-cyan font-mono text-xs sm:text-sm md:text-base px-4">SECURE RPC ENDPOINT OPEN_</p>
             </motion.div>
 
             <motion.form 
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                className="bg-white/5 p-8 md:p-12 rounded-2xl border border-white/10 backdrop-blur-md"
+                className="bg-white/5 p-6 sm:p-8 md:p-12 rounded-2xl border border-white/10 backdrop-blur-md"
                 onSubmit={handleContactSubmit}
             >
-                <div className="grid md:grid-cols-2 gap-6 mb-6">
+                <div className="grid md:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
                     <div className="space-y-2">
-                        <label className="text-xs font-mono text-gray-400 uppercase">Public Key / Name</label>
+                        <label className="text-[10px] sm:text-xs font-mono text-gray-400 uppercase">Public Key / Name</label>
                         <input 
                           type="text" 
                           value={formData.name}
                           onChange={(e) => setFormData({...formData, name: e.target.value})}
-                          className="w-full bg-black/50 border border-white/10 rounded p-4 text-white focus:outline-none focus:border-neon-cyan focus:ring-1 focus:ring-neon-cyan transition-all" 
+                          className="w-full bg-black/50 border border-white/10 rounded p-3 sm:p-4 text-white text-base focus:outline-none focus:border-neon-cyan focus:ring-1 focus:ring-neon-cyan transition-all" 
                           placeholder="0x..." 
                           required
                         />
                     </div>
                     <div className="space-y-2">
-                        <label className="text-xs font-mono text-gray-400 uppercase">Comm Frequency</label>
+                        <label className="text-[10px] sm:text-xs font-mono text-gray-400 uppercase">Comm Frequency</label>
                         <input 
                           type="email" 
                           value={formData.email}
                           onChange={(e) => setFormData({...formData, email: e.target.value})}
-                          className="w-full bg-black/50 border border-white/10 rounded p-4 text-white focus:outline-none focus:border-neon-cyan focus:ring-1 focus:ring-neon-cyan transition-all" 
+                          className="w-full bg-black/50 border border-white/10 rounded p-3 sm:p-4 text-white text-base focus:outline-none focus:border-neon-cyan focus:ring-1 focus:ring-neon-cyan transition-all" 
                           placeholder="user@example.eth" 
                           required
                         />
                     </div>
                 </div>
-                <div className="space-y-2 mb-8">
-                    <label className="text-xs font-mono text-gray-400 uppercase">Transaction Data</label>
+                <div className="space-y-2 mb-6 sm:mb-8">
+                    <label className="text-[10px] sm:text-xs font-mono text-gray-400 uppercase">Transaction Data</label>
                     <textarea 
                       rows={5} 
                       value={formData.message}
                       onChange={(e) => setFormData({...formData, message: e.target.value})}
-                      className="w-full bg-black/50 border border-white/10 rounded p-4 text-white focus:outline-none focus:border-neon-cyan focus:ring-1 focus:ring-neon-cyan transition-all" 
+                      className="w-full bg-black/50 border border-white/10 rounded p-3 sm:p-4 text-white text-base focus:outline-none focus:border-neon-cyan focus:ring-1 focus:ring-neon-cyan transition-all resize-none" 
                       placeholder="Enter your proposal parameters..." 
                       required
                     />
                 </div>
                 <button 
                     type="submit" 
-                    className="w-full bg-neon-cyan text-black font-bold uppercase tracking-widest py-4 rounded hover:bg-white transition-colors flex items-center justify-center gap-2 group cursor-none"
+                    className="w-full bg-neon-cyan text-black font-bold uppercase tracking-widest py-3 sm:py-4 rounded hover:bg-white transition-colors flex items-center justify-center gap-2 group cursor-none text-sm sm:text-base min-h-[44px]"
                     data-interactive="true"
                 >
-                    Sign & Broadcast <Send size={18} className="group-hover:translate-x-1 transition-transform" />
+                    Sign & Broadcast <Send size={16} className="sm:w-[18px] sm:h-[18px] group-hover:translate-x-1 transition-transform" />
                 </button>
 
                 <div className="mt-8 text-center">
