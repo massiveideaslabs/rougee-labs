@@ -7,7 +7,7 @@ export const PROJECTS: Project[] = [
     category: 'Decentralized Ticketing',
     description: 'A fully decentralized on-chain event ticketing site built on Base chain designed for crypto events and conferences',
     technologies: ['Base', 'React', 'Solidity'],
-    imageUrl: '/images/project-1-basepass.png',
+    imageUrl: '/images/project-1-basepass.jpg',
     year: '2025',
     liveUrl: 'https://www.basepass.events',
   },
@@ -17,7 +17,7 @@ export const PROJECTS: Project[] = [
     category: 'Sentiment Analysis',
     description: 'A sentiment analysis tool built on Base chain.',
     technologies: ['Base', 'React', 'AI'],
-    imageUrl: '/images/project-2-tia.png',
+    imageUrl: '/images/project-2-tia.jpg',
     year: '2025',
     liveUrl: 'https://tia-ai.netlify.app',
   },
@@ -27,7 +27,7 @@ export const PROJECTS: Project[] = [
     category: 'Decentralized Exchange',
     description: 'First-ever NFT marketplace and launcher on the Keeta blockchain',
     technologies: ['Keeta', 'React', 'IPFS'],
-    imageUrl: '/images/project-3-degenswap.png',
+    imageUrl: '/images/project-3-degenswap.jpg',
     year: '2025',
     liveUrl: 'https://degenswap-seven.vercel.app/',
     codeUrl: 'https://github.com/cyberdreadx/pixel-degens-hub'
@@ -38,7 +38,7 @@ export const PROJECTS: Project[] = [
     category: 'Web3 Wallet',
     description: 'Created a galactic themed responsive Keeta wallet that allows users to send, receive, and swap tokens on the Keeta chain.',
     technologies: ['Keeta', 'React'],
-    imageUrl: '/images/project-4-yoda.png',
+    imageUrl: '/images/project-4-yoda.jpg',
     year: '2025',
     liveUrl: 'https://lovable.dev/projects/66c22c17-5f99-4fe8-a3a0-b9a431184055?permissionView=main',
     codeUrl: 'https://github.com/cyberdreadx/babypaca?tab=readme-ov-file'
@@ -49,7 +49,7 @@ export const PROJECTS: Project[] = [
     category: 'Music Streaming',
     description: 'Fully decentralized music streaming platform with tokenized songs and play gating functions. Release date TBA.',
     technologies: ['Solidity', 'BASE', 'React', 'XCODE'],
-    imageUrl: '/images/project-5-sonar.png',
+    imageUrl: '/images/project-5-sonar.jpg',
     year: 'TBA'
   },
   {

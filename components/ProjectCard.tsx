@@ -10,6 +10,8 @@ interface ProjectCardProps {
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -70,11 +72,31 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
             
             {/* Image Section */}
             <div className="relative h-48 sm:h-64 md:h-80 w-full rounded-xl overflow-hidden border border-white/10 group-hover:border-neon-cyan/30 transition-all">
+                {/* Loading Skeleton */}
+                {!imageLoaded && !imageError && (
+                  <div className="absolute inset-0 bg-dark-surface animate-pulse flex items-center justify-center">
+                    <div className="w-12 h-12 border-2 border-neon-cyan/30 border-t-neon-cyan rounded-full animate-spin" />
+                  </div>
+                )}
+                
+                {/* Error State */}
+                {imageError && (
+                  <div className="absolute inset-0 bg-dark-surface flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="text-neon-purple text-4xl mb-2">⚠</div>
+                      <p className="text-gray-500 text-xs font-mono">Image unavailable</p>
+                    </div>
+                  </div>
+                )}
+                
                 <div className="absolute inset-0 bg-neon-purple/10 mix-blend-overlay z-10 group-hover:bg-transparent transition-colors" />
                 <img 
                     src={project.imageUrl} 
-                    alt={project.title} 
-                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" 
+                    alt={project.title}
+                    loading="lazy"
+                    onLoad={() => setImageLoaded(true)}
+                    onError={() => setImageError(true)}
+                    className={`w-full h-full object-cover transform group-hover:scale-110 transition-all duration-700 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
                 />
             </div>
 
