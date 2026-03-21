@@ -2,6 +2,26 @@ import { Project } from './types';
 
 export const PROJECTS: Project[] = [
   {
+    id: 'rougechain',
+    title: 'ROUGECHAIN',
+    category: 'Post-Quantum Layer 1',
+    description: 'A post-quantum Layer 1 blockchain where every signature, transaction, and encrypted message is secured by NIST-approved lattice cryptography. Features quantum entropy proposer selection (ANU QRNG), shielded transactions via zk-STARKs, and a live EVM bridge.',
+    technologies: ['Rust', 'ML-DSA-65', 'ML-KEM-768', 'zk-STARKs', 'QRNG'],
+    imageUrl: '/images/project-rougechain.jpg',
+    year: '2026',
+    liveUrl: 'https://rougechain.io',
+  },
+  {
+    id: 'rougechain-wallet',
+    title: 'ROUGECHAIN WALLET',
+    category: 'Post-Quantum Browser Extension',
+    description: 'Manifest V3 browser extension with ML-DSA signatures, ML-KEM encrypted messaging, and a provider API for dApp integration. Private keys never leave the device.',
+    technologies: ['TypeScript', 'ML-DSA-65', 'ML-KEM-768', 'Manifest V3'],
+    imageUrl: '/images/project-wallet.jpg',
+    year: '2026',
+    liveUrl: 'https://rougechain.io',
+  },
+  {
     id: '1',
     title: 'BASEPASS',
     category: 'Decentralized Ticketing',
@@ -65,6 +85,7 @@ export const PROJECTS: Project[] = [
 
 export const NAV_LINKS = [
   { label: 'Manifesto', href: '#hero' },
+  { label: 'RougeChain', href: '#rougechain' },
   { label: 'Protocols', href: '#work' },
   { label: 'Consensus', href: '#about' },
   { label: 'Signal', href: '#contact' },

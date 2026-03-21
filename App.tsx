@@ -1,6 +1,6 @@
 import React, { Suspense, useState, useEffect } from 'react';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
-import { ArrowDown, Mail, MapPin, Phone, Send, ExternalLink, TrendingUp, ShoppingCart, PieChart, Users, Wallet, Lock, Zap, Globe, Landmark, LineChart } from 'lucide-react';
+import { ArrowDown, Mail, Send, ExternalLink, TrendingUp, ShoppingCart, PieChart, Users, Lock, Zap, Globe, Landmark, LineChart, Shield, Fingerprint, Key, MessageSquareLock } from 'lucide-react';
 import Navigation from './components/Navigation';
 import CustomCursor from './components/CustomCursor';
 import Hero3D from './components/Hero3D';
@@ -84,7 +84,7 @@ function App() {
               style={{ x: heroSubtitleX, y: heroSubtitleY }}
               className="text-neon-cyan font-mono tracking-[0.3em] md:tracking-[0.5em] text-xs sm:text-sm md:text-base mb-3 md:mb-4 px-2"
             >
-              MAINNET STATUS: ACTIVE
+              THE FIRST POST-QUANTUM BLOCKCHAIN
             </motion.h2>
             <motion.h1 
               style={{ x: heroTitleX, y: heroTitleY }}
@@ -99,7 +99,7 @@ function App() {
               style={{ x: heroDescX, y: heroDescY }}
               className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base md:text-lg lg:text-xl font-bold tracking-wide mb-8 md:mb-12 px-4"
             >
-              Architecting the decentralized future through cryptographic truth and high-performance smart contracts, creating a web of interconnected dApps utilizing the $XRGE token.
+              RougeChain is a post-quantum Layer 1 where every signature, transaction, and encrypted message is secured by NIST-approved lattice cryptography — not as a future upgrade, but as the foundation.
             </motion.p>
           </motion.div>
         </div>
@@ -120,11 +120,73 @@ function App() {
             animate={{ x: [0, -1000] }}
             transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
         >
-            {Array(10).fill("SOLIDITY // RUST // ETHEREUM // SOLANA // ZERO-KNOWLEDGE // DEFI // IPFS // HARDHAT // WAGMI // SMART CONTRACTS //").map((text, i) => (
+            {Array(10).fill("ML-DSA-65 // ML-KEM-768 // QUANTUM ENTROPY // zk-STARKs // POST-QUANTUM // RUST // ROUGECHAIN // NIST FIPS 204 // ANU QRNG // LATTICE CRYPTO //").map((text, i) => (
                 <span key={i}>{text}</span>
             ))}
         </motion.div>
       </div>
+
+      {/* RougeChain Features Section */}
+      <section id="rougechain" className="relative py-16 sm:py-24 md:py-32 bg-dark-surface overflow-hidden border-t border-white/5">
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(188,19,254,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(188,19,254,0.02)_1px,transparent_1px)] bg-[size:80px_80px] pointer-events-none" />
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+              <span className="text-neon-purple">QUANTUM-SAFE</span> BY DEFAULT
+            </h2>
+            <p className="text-gray-400 font-mono text-xs sm:text-sm tracking-widest max-w-2xl mx-auto">
+              Every cryptographic primitive in RougeChain is built on NIST-standardized post-quantum algorithms. No migration required.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-6xl mx-auto">
+            {[
+              { icon: Fingerprint, title: 'Post-Quantum Signatures', desc: 'ML-DSA-65 (NIST FIPS 204) — lattice-based digital signatures resistant to Shor\'s algorithm', color: 'text-neon-cyan', border: 'group-hover:border-neon-cyan/50' },
+              { icon: Key, title: 'Quantum Key Exchange', desc: 'ML-KEM-768 (NIST FIPS 203) — lattice-based key encapsulation for quantum-safe encrypted channels', color: 'text-neon-purple', border: 'group-hover:border-neon-purple/50' },
+              { icon: Zap, title: 'Quantum Entropy', desc: 'ANU QRNG — proposer selection seeded by quantum vacuum fluctuations for provably unpredictable consensus', color: 'text-neon-green', border: 'group-hover:border-neon-green/50' },
+              { icon: MessageSquareLock, title: 'Encrypted Messaging', desc: 'End-to-end post-quantum encrypted communications built into the protocol via ML-KEM key exchange', color: 'text-white', border: 'group-hover:border-white/50' },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className={`bg-black/40 p-6 sm:p-8 rounded-2xl border border-white/5 ${item.border} transition-colors group cursor-none relative overflow-hidden backdrop-blur-sm`}
+                data-interactive="true"
+              >
+                <div className={`p-3 w-fit rounded-lg bg-white/5 mb-4 ${item.color}`}>
+                  <item.icon size={24} />
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold mb-2">{item.title}</h3>
+                <p className="text-gray-400 text-xs sm:text-sm leading-relaxed font-mono">{item.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="mt-12 text-center"
+          >
+            <a
+              href="https://rougechain.io"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-neon-cyan/10 border border-neon-cyan/30 rounded-full text-neon-cyan font-mono text-sm tracking-widest hover:bg-neon-cyan/20 hover:border-neon-cyan/60 transition-all group cursor-none"
+              data-interactive="true"
+            >
+              EXPLORE ROUGECHAIN <ExternalLink size={14} className="group-hover:translate-x-1 transition-transform" />
+            </a>
+          </motion.div>
+        </div>
+      </section>
 
       {/* Projects Section */}
       <section id="work" className="relative py-16 sm:py-24 md:py-32 px-4 container mx-auto z-10">
@@ -136,8 +198,8 @@ function App() {
           viewport={{ once: true }}
           className="mb-24 pl-4 border-l-4 border-neon-cyan"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-3 md:mb-4">SELECTED WORKS</h2>
-          <p className="text-gray-400 font-mono text-xs sm:text-sm tracking-widest">ON-CHAIN PROTOCOLS_</p>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-3 md:mb-4">ECOSYSTEM</h2>
+          <p className="text-gray-400 font-mono text-xs sm:text-sm tracking-widest">PROTOCOLS & PRODUCTS POWERED BY $XRGE_</p>
         </motion.div>
 
         <div className="flex flex-col items-center">
@@ -176,22 +238,22 @@ function App() {
                 className="space-y-6 sm:space-y-8"
             >
                 <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                    <span className="text-neon-cyan">ONE</span> token<br/>
-                    powering an entire <span className="text-neon-purple">ECOSYSTEM</span>
+                    <span className="text-neon-cyan">QUANTUM-SAFE</span> infrastructure<br/>
+                    powering the <span className="text-neon-purple">FUTURE</span>
                 </h2>
                 
                 <div className="space-y-4 md:space-y-6 text-gray-300 leading-relaxed text-sm sm:text-base">
                   <p>
-                    At Rougee Labs, we're not just building dApps; we're engineering an ecosystem of interconnected economies all creating maximum value capture for the $XRGE token.
+                    At Rougee Labs, we're building RougeChain — a post-quantum Layer 1 blockchain where every cryptographic operation uses NIST-approved lattice algorithms. When quantum computers break RSA and ECDSA, RougeChain is already safe.
                   </p>
                   <p>
-                    $XRGE, our utility token currently available on Base and Keeta, is the fuel powering a whole suite of apps across both chains, from an NFT exchange to a decentralized streaming service. A portion of all fees generated in the ecosystem go to token buy backs, allocated towards burns and staking rewards for holders, linked by a custom-built bridge between the two chains.
+                    $XRGE is the native token of RougeChain, also available on Base and Keeta via our custom-built bridge. It powers an ecosystem of dApps from DeFi to decentralized streaming, with validator staking rewards and fee buybacks creating sustainable value capture.
                   </p>
                   <p className="font-bold text-white">
-                    Join the movement by purchasing $XRGE or utilizing any of our products.
+                    Stake $XRGE to become a validator and earn block rewards, or explore our ecosystem of quantum-secured applications.
                   </p>
                   <p className="text-neon-cyan/80 italic">
-                    Interested in joining the Rougee team or building a dApp fueled by $XRGE? Reach out below!
+                    Building on RougeChain? Our SDK and wallet extension make post-quantum integration seamless. Reach out below.
                   </p>
                 </div>
 
@@ -379,7 +441,7 @@ function App() {
             <div className="text-center md:text-left">
               <h3 className="text-xl font-bold text-white mb-2">ROUGEE LABS</h3>
               <p className="text-gray-500 font-mono text-xs leading-relaxed">
-                Architecting the decentralized future through cryptographic truth and high-performance smart contracts.
+                Building RougeChain — the post-quantum blockchain where every signature is quantum-safe from day one.
               </p>
             </div>
             
